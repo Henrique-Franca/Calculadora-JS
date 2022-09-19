@@ -26,6 +26,12 @@ class CalcController{
 
     }
 
+    initButtonsEvent(){
+
+        let buttons = document.querySelectorAll("#buttons > g, #parts > g");
+        
+    }
+
 
     //Metodos
 
