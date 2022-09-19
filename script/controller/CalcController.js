@@ -217,7 +217,7 @@ class CalcController{
             }else{
 
                 let newValue = this.getLastOperation().toString() + value.toString();
-                this.setLastOperation(parseInt(newValue));
+                this.setLastOperation(parseFloat(newValue));
                 
                 //atualizar display
                 this.setLastNumberToDisplay();
@@ -234,6 +234,20 @@ class CalcController{
     setError(){
         this.displayCalc = "Error";
     }
+
+    addDot(){
+
+       let lastOperation = this.getLastOperation();
+       if(this.isOperator(lastOperation) || !lastOperation){
+        this.pushOperation('0.');
+       }else{
+        
+       }
+
+
+    }
+
+
 
     //switch
     execBtn(value){
@@ -273,7 +287,7 @@ class CalcController{
             break;  
             
             case 'ponto':
-                this.addOperation('.'); 
+                    this.addDot(); 
             break;  
 
             case '0':
