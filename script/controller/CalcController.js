@@ -58,6 +58,7 @@ class CalcController{
 
     }
 
+    //retornar o operador
     isOperator(value){
      
         return ['+','-','*','%','/'].indexOf(value) > -1;
@@ -70,6 +71,33 @@ class CalcController{
         }*/
     }
 
+   
+    //metodo para juntar os tres primeiros digitos e calcular
+    pushOperation(value){
+
+        this._operation.push(value);
+
+        if(this._operation.length > 3){
+
+            
+
+            this.calc();
+
+
+        }
+
+    }
+
+     //metodo para calcular
+     calc(){
+        let last = this._operation.pop();
+
+        let result = eval(this._operation.join(""));
+
+        this._operation = [result, last];
+    }
+
+
     addOperation(value){
 
         if(isNaN(this.getLastOperation())){
@@ -78,23 +106,36 @@ class CalcController{
                 //trocar o operador
                 this.setLastOperation(value);
 
-            }else if(isNaN(vcalue)){
+            }else if(isNaN(value)){
                 //outra coisa
             }
             else{
 
-                this._operation.push(value);
+                this.pushOperation(value);
+
+                
 
             }
 
         }else {
-            //number
-           let newValue = this.getLastOperation().toString() + value.toString();
-           this.setLastOperation(newValue);
+            
+            if(this,this.isOperator(value)){
+
+                this.pushOperation(value);
+
+            }else{
+
+                let newValue = this.getLastOperation().toString() + value.toString();
+                this.setLastOperation(parseInt(newValue));
+                //atualizar display
+
+            }
+
+           
         }
 
         
-        console.log(this._operation);
+        
     }
 
     setError(){
