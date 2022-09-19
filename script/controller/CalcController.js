@@ -20,6 +20,8 @@ class CalcController{
             this.setdisplayDateTime();
         }, 1000);
 
+        this.setLastNumberToDisplay();
+
        /* //parar o intervalo
         setTimeout(()=>{
             clearInterval(interval);
@@ -39,10 +41,12 @@ class CalcController{
     //metodo para apagar tudo
     clearAll(){
         this._operation = [];
+        this.setLastNumberToDisplay();
     }
     //metodo para apagar só a ultima coisa escrita
     clearEntry(){
         this._operation.pop();
+        this.setLastNumberToDisplay();
     }
 
     //metodo do arry
@@ -89,14 +93,33 @@ class CalcController{
     }
 
      //metodo para calcular
-     calc(){
-        let last = this._operation.pop();
+    calc(){
+
+        let  last = '';
+
+        if(this._operation.length >3){
+            last = this._operation.pop();
+        }
+
+
+        
 
         let result = eval(this._operation.join(""));
+        //caso seja porcentagem 
+        if(last == '%'){
 
-        this._operation = [result, last];
+            result /=  100;
+            this._operation = [result];
+
+        }else{
+
+            this._operation = [result];
+            if(last) this._operation.push(last);
+        }
+
         this.setLastNumberToDisplay();
     }
+
 
     //metodo  para adicionar o ultimo numero no display
     setLastNumberToDisplay(){
@@ -108,6 +131,8 @@ class CalcController{
                 break;
             }
         }
+
+        if(!lastNumber) lastNumber = 0;
 
         this.displayCalc = lastNumber;
         
@@ -196,7 +221,7 @@ class CalcController{
             break;  
             
             case 'igual':
-                
+                this.calc();
             break;  
             
             case 'ponto':
