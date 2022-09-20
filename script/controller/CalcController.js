@@ -45,11 +45,15 @@ class CalcController{
     //metodo para apagar tudo
     clearAll(){
         this._operation = [];
+        this._lastNumber = '';
+        this._lastOperator = '';
         this.setLastNumberToDisplay();
     }
     //metodo para apagar só a ultima coisa escrita
     clearEntry(){
         this._operation.pop();
+        
+
         this.setLastNumberToDisplay();
     }
 
@@ -146,7 +150,7 @@ class CalcController{
             if(last) this._operation.push(last);
         }
 
-        this.setToDisplay();
+        this.setLastNumberToDisplay();
     }
 
     //metodo para clicar mais de uma vez no botao igual
@@ -217,7 +221,7 @@ class CalcController{
             }else{
 
                 let newValue = this.getLastOperation().toString() + value.toString();
-                this.setLastOperation(parseFloat(newValue));
+                this.setLastOperation(newValue);
                 
                 //atualizar display
                 this.setLastNumberToDisplay();
@@ -235,16 +239,19 @@ class CalcController{
         this.displayCalc = "Error";
     }
 
+    //programação do ponto
     addDot(){
+
+        if(typeof lastOperation === 'string' && lastOperation.split('').indexOf('.') > -1) return;
 
        let lastOperation = this.getLastOperation();
        if(this.isOperator(lastOperation) || !lastOperation){
         this.pushOperation('0.');
        }else{
-        
+            this.setLastOperation(lastOperation.toString() + '.');
        }
 
-
+       this.setLastNumberToDisplay();
     }
 
 
