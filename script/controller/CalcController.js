@@ -17,6 +17,34 @@ class CalcController{
 
     }
 
+    pasteFromClipboard(){
+
+        document.addEventListener('paste',e=>{
+
+           let text = e.clipboardData.getData('Text');
+
+           this.displayCalc = parseFloat(text);
+
+        });
+
+    }
+
+
+    copyToClipboard(){
+
+        let input = document.createElement('input');
+        input.value = this.displayCalc;
+        
+        document.body.appendChild(input);
+        input.select();
+
+        document.execCommand("Copy");
+
+        input.remove();
+
+    }
+
+
     initialize(){
 
         this.setdisplayDateTime();
@@ -26,6 +54,7 @@ class CalcController{
         }, 1000);
 
         this.setLastNumberToDisplay();
+        this.pasteFromClipboard();
 
        /* //parar o intervalo
         setTimeout(()=>{
@@ -35,6 +64,7 @@ class CalcController{
 
     }
 
+    //metodo para identificar ações do teclado
     initKeyboard(){
         document.addEventListener('keyup', e=>{
             switch(e.key){
@@ -78,6 +108,10 @@ class CalcController{
                 
                     this.addOperation(parseInt(e.key));
     
+                break;
+
+                case 'c':
+                    if( e.ctrlKey) this.copyToClipboard();
                 break;
     
     
