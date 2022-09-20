@@ -218,9 +218,16 @@ class CalcController{
     //Metodo para o resultado
     getResult(){
 
-       // console.log("getResult", this._operation)
+      try{
 
         return eval(this._operation.join(""));
+
+      }catch(e){
+        setTimeout(()=>{
+            this.setError();
+        }, 1);
+        
+      }
     }
 
      //metodo para calcular
